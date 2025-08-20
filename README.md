@@ -205,8 +205,10 @@ curl -X POST http://localhost:8080/api/expenses \
 ---
 ## Email
 - **Name:-** *Yash Javanjal*
--**Email:-** *yashjavanjal2512*
--**GitHub:-** Yash-Javnjal
+- 
+- **Email:-** *yashjavanjal2512*
+- 
+- **GitHub:-** Yash-Javnjal
 
 -----
 
