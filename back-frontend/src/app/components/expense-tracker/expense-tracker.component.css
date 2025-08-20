@@ -1,0 +1,175 @@
+/* Dark mode styles */
+.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.dark-mode .card {
+  background-color: #2d2d2d;
+  border-color: #404040;
+}
+
+.dark-mode .card-header {
+  background-color: #404040;
+  border-color: #404040;
+}
+
+.dark-mode .list-group-item {
+  background-color: #2d2d2d;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+.dark-mode .form-control,
+.dark-mode .form-select {
+  background-color: #404040;
+  border-color: #555555;
+  color: #ffffff;
+}
+
+.dark-mode .form-control:focus,
+.dark-mode .form-select:focus {
+  background-color: #404040;
+  border-color: #007bff;
+  color: #ffffff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.dark-mode .btn-outline-primary {
+  color: #007bff;
+  border-color: #007bff;
+}
+
+.dark-mode .btn-outline-primary:hover,
+.dark-mode .btn-outline-primary.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
+}
+
+.dark-mode .btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.dark-mode .btn-outline-danger:hover {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #ffffff;
+}
+
+.dark-mode .text-muted {
+  color: #adb5bd !important;
+}
+
+/* Custom styles for expense items */
+.list-group-item {
+  transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dark-mode .list-group-item:hover {
+  background-color: #404040;
+}
+
+/* Category icons */
+.category-icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Statistics cards */
+.stats-card {
+  transition: transform 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Form validation styles */
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Button styles */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container-fluid {
+    padding: 0.5rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .list-group-item .row {
+    flex-direction: column;
+  }
+
+  .list-group-item .col-md-2 {
+    margin-top: 0.5rem;
+    text-align: left !important;
+  }
+}
+
+/* Animation for new expense */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.list-group-item {
+  animation: slideIn 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.dark-mode ::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}

@@ -1,0 +1,136 @@
+<div [class.dark-mode]="isDarkMode">
+  <header class="top-bar">
+    <nav class="nav-bar">
+      <h1>Expense Tracker</h1>
+      <p>Track your expense</p>
+      <div class="toggle-wrapper">
+        <input type="checkbox" id="darkModeToggle" class="toggle-checkbox" [checked]="isDarkMode" (change)="toggleDarkMode()">
+        <label for="darkModeToggle" class="toggle-label">
+          <span class="toggle-ball"></span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <div class="main-content">
+    <div class="left-col">
+      <div class="stats-box">
+        <div class="header">Total expense</div>
+        <div class="total" id="total-amount">Rs.{{ stats.totalAmount.toFixed(2) }}</div>
+        <div class="grid">
+          <div class="item">
+            <div class="value" id="total-entries">{{ stats.totalEntries }}</div>
+            <div class="label">Transactions</div>
+          </div>
+          <div class="item">
+            <div class="value" id="avg-entry">Rs.{{ stats.averageAmount.toFixed(2) }}</div>
+            <div class="label">Average</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">Monthly Summary</div>
+      <div class="summary-box" id="monthly-summary">
+        <ng-container *ngIf="monthlyCategoryBreakdown.length > 0; else noMonthly">
+          <div>Total spent this month: Rs.{{ monthlyTotalAmount.toFixed(2) }}</div>
+          <ul>
+            <li *ngFor="let item of monthlyCategoryBreakdown">{{ item.label }}: Rs.{{ item.amount.toFixed(2) }}</li>
+          </ul>
+        </ng-container>
+        <ng-template #noMonthly>
+          <div class="no-entries">No expense this month</div>
+        </ng-template>
+      </div>
+
+      <div class="section-header">Recent expense</div>
+
+      <div class="sort-container">
+        <label for="sort">Sort by:</label>
+        <select id="sort" [(ngModel)]="sortBy" (change)="onSortChange()">
+          <option value="date">Date</option>
+          <option value="amount">Amount</option>
+          <option value="category">Category</option>
+        </select>
+      </div>
+
+      <div id="recent-list">
+        <ng-container *ngIf="filteredExpenses.length > 0; else noRecent">
+          <div class="entry-item" *ngFor="let entry of filteredExpenses">
+            <div class="entry-icon">{{ getCategoryIcon(entry.category) }}</div>
+            <div class="entry-info">
+              <div class="entry-name">{{ entry.description }}</div>
+              <div class="entry-category">{{ getCategoryLabel(entry.category) }}</div>
+              <div class="entry-date">{{ entry.date | date:'medium' }}</div>
+            </div>
+            <div class="entry-value">
+              <div class="entry-price">Rs.{{ entry.amount.toFixed(2) }}</div>
+              <button class="btn-delete" (click)="deleteExpense(entry.id!)">Delete</button>
+              <button class="btn-edit" (click)="editExpense(entry)">Edit</button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noRecent>
+          <div class="no-entries">No expense recorded yet</div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <div class="add-form-box">
+        <div class="title">Add New Expense</div>
+        <div id="message-area">
+          <div *ngIf="messageText" [ngClass]="messageType === 'success' ? 'success-msg' : 'error-msg'">{{ messageText }}</div>
+        </div>
+        <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" id="entry-form">
+          <div class="form-field">
+            <label for="amount">Amount (Rs.)</label>
+            <input type="number" id="amount" formControlName="amount" step="0.01" min="0" placeholder="0.00" required>
+          </div>
+          <div class="form-field">
+            <label for="category">Category</label>
+            <select id="category" formControlName="category" required>
+              <option value="">Select Category</option>
+              <option *ngFor="let cat of categories" [value]="cat.value">{{ cat.label }}</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="description">Description</label>
+            <input type="text" id="description" formControlName="description" placeholder="e.g., Lunch at restaurant" required>
+          </div>
+          <button type="submit" class="btn-submit" id="submit-btn" [disabled]="expenseForm.invalid">{{ isEditing ? 'Update Expense' : 'Add Expense' }}</button>
+        </form>
+      </div>
+
+      <div class="filter-buttons">
+        <button class="filter-btn" [class.active]="selectedCategory === ''" (click)="filterByCategory('')" data-category="">All</button>
+        <button class="filter-btn" *ngFor="let cat of categories" [class.active]="selectedCategory === cat.value" (click)="filterByCategory(cat.value)" [attr.data-category]="cat.value">{{ cat.label }}</button>
+      </div>
+
+      <div class="filtered-section">
+        <div id="filtered-list">
+          <ng-container *ngIf="selectedCategory; else selectPrompt">
+            <ng-container *ngIf="categoryFilteredExpenses.length > 0; else noFiltered">
+              <div class="entry-item" *ngFor="let entry of categoryFilteredExpenses">
+                <div class="entry-icon">{{ getCategoryIcon(entry.category) }}</div>
+                <div class="entry-info">
+                  <div class="entry-name">{{ entry.description }}</div>
+                  <div class="entry-category">{{ getCategoryLabel(entry.category) }}</div>
+                  <div class="entry-date">{{ entry.date | date:'medium' }}</div>
+                </div>
+                <div class="entry-value">
+                  <div class="entry-price">Rs.{{ entry.amount.toFixed(2) }}</div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #noFiltered>
+              <div class="no-entries">No expense to display</div>
+            </ng-template>
+          </ng-container>
+          <ng-template #selectPrompt>
+            <div class="no-entries">Select a category to filter expense</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

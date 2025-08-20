@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="top-bar">
+        <nav class="nav-bar">
+            <h1>Expense Tracker</h1>
+            <p>Track your expenses</p>
+            <div class="toggle-wrapper">
+  <input type="checkbox" id="darkModeToggle" class="toggle-checkbox">
+  <label for="darkModeToggle" class="toggle-label">
+    <span class="toggle-ball"></span>
+  </label>
+</div>
+
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="left-col">
+            <div class="stats-box">
+                <div class="header">Total Expenses</div>
+                <div class="total" id="total-amount">Rs.0.00</div>
+                <div class="grid">
+                    <div class="item">
+                        <div class="value" id="total-entries">0</div>
+                        <div class="label">Transactions</div>
+                    </div>
+                    <div class="item">
+                        <div class="value" id="avg-entry">Rs.0.00</div>
+                        <div class="label">Average</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">Monthly Summary</div>
+            <div class="summary-box" id="monthly-summary">
+                <div class="no-entries">No expenses yet</div>
+            </div>
+
+            <div class="section-header">Recent Expenses</div>
+
+            <div class="sort-container">
+                <label for="sort">Sort by:</label>
+                <select id="sort">
+                    <option value="date">Date</option>
+                    <option value="amount">Amount</option>
+                    <option value="category">Category</option>
+                </select>
+            </div>
+
+            <div id="recent-list">
+                <div class="no-entries">No expenses recorded yet</div>
+            </div>
+        </div>
+
+        <div class="right-col">
+            <div class="add-form-box">
+                <div class="title">Add New Expense</div>
+                <div id="message-area"></div>
+                <form id="entry-form">
+                    <div class="form-field">
+                        <label for="amount">Amount (Rs.)</label>
+                        <input type="number" id="amount" step="0.01" min="0" placeholder="0.00" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="category">Category</label>
+                        <select id="category" required>
+                            <option value="">Select Category</option>
+                            <option value="food">Food & Drink</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="transport">Transport</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="hospital">Healthcare</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" placeholder="e.g., Lunch at restaurant" required>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submit-btn">Add Expense</button>
+                </form>
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="">All</button>
+                <button class="filter-btn" data-category="food">Food</button>
+                <button class="filter-btn" data-category="clothing">Clothing</button>
+                <button class="filter-btn" data-category="transport">Transport</button>
+                <button class="filter-btn" data-category="electronics">Electronics</button>
+                <button class="filter-btn" data-category="hospital">Healthcare</button>
+                <button class="filter-btn" data-category="other">Other</button>
+            </div>
+
+            <div class="filtered-section">
+                <div id="filtered-list">
+                    <div class="no-entries">Select a category to filter expenses</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
