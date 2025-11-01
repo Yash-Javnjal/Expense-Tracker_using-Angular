@@ -1,6 +1,6 @@
 /* Dark mode styles */
 .dark-mode {
-  background-color: #1e1e1e;
+  background-color: #121212;
   color: #ffffff;
 }
 
@@ -75,6 +75,12 @@
 
 .dark-mode .list-group-item:hover {
   background-color: #404040;
+}
+
+div#monthly-summary {
+    border: 2px solid #519e51c4;
+    border-radius: 30px;
+    padding: 20px;
 }
 
 /* Category icons */
@@ -172,4 +178,15 @@
 
 .dark-mode ::-webkit-scrollbar-thumb:hover {
   background: #777;
+}
+
+/*
+ * CHART.JS STYLES
+ * This is the new code to fix the chart visibility
+*/
+.chart-container {
+  position: relative;
+  height: 250px;  /* You can change this height */
+  width: 100%;    /* This makes it fill the summary box */
+  margin-top: 15px;
 }

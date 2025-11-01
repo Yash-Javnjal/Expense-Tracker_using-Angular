@@ -6,6 +6,12 @@ import { Subscription } from 'rxjs';
 import { Expense, EXPENSE_CATEGORIES } from '../../models/expense.model';
 import { ExpenseService } from '../../services/expense.service';
 
+// 1. IMPORT CHART.JS (as per the documentation)
+import { Chart, registerables } from 'chart.js/auto';
+
+// 2. REGISTER CHART.JS COMPONENTS
+Chart.register(...registerables);
+
 @Component({
   selector: 'app-expense-tracker',
   standalone: true,
@@ -27,6 +33,9 @@ export class ExpenseTrackerComponent implements OnInit, OnDestroy {
   messageText: string | null = null;
   messageType: 'success' | 'error' | null = null;
 
+  // 3. ADD A PROPERTY TO HOLD THE CHART INSTANCE
+  public categoryChart: any;
+
   constructor(
     private expenseService: ExpenseService,
     private fb: FormBuilder,
@@ -45,12 +54,19 @@ export class ExpenseTrackerComponent implements OnInit, OnDestroy {
         this.expense = expense;
         this.filteredExpenses = [...expense];
         this.sortExpenses();
+        
+        // 4. CALL THE FUNCTION TO CREATE/UPDATE THE CHART WHEN DATA ARRIVES
+        this.createMonthlyCategoryChart();
       })
     );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    // 5. (Optional but good practice) Destroy the chart on component destroy
+    if (this.categoryChart) {
+      this.categoryChart.destroy();
+    }
   }
 
   // Form submission
@@ -151,6 +167,9 @@ export class ExpenseTrackerComponent implements OnInit, OnDestroy {
   toggleDarkMode(): void {
     this.isDarkMode = !this.isDarkMode;
     document.body.classList.toggle('dark-mode', this.isDarkMode);
+    
+    // Re-create the chart when dark mode changes so text color is correct
+    this.createMonthlyCategoryChart();
   }
 
   // Get category icon
@@ -223,5 +242,70 @@ export class ExpenseTrackerComponent implements OnInit, OnDestroy {
       this.messageText = null;
       this.messageType = null;
     }, 4000);
+  }
+
+  // 6. ADD THE NEW FUNCTION TO CREATE THE DOUGHNUT CHART
+  private createMonthlyCategoryChart(): void {
+    // A. Get the data from your existing getter
+    const data = this.monthlyCategoryBreakdown;
+
+    // B. Get the canvas element from the HTML
+    const canvas = document.getElementById('monthlyCategoryChart') as HTMLCanvasElement;
+    if (!canvas) {
+      return;
+    }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      return;
+    }
+
+    // C. Destroy any old chart instance to prevent errors
+    if (this.categoryChart) {
+      this.categoryChart.destroy();
+    }
+
+    // D. Check if there's data. If not, don't do anything.
+    if (data.length === 0) {
+      return; // No data, no chart
+    }
+
+    // E. Prepare labels and data for the chart
+    const chartLabels = data.map(d => d.label);
+    const chartData = data.map(d => d.amount);
+
+    // F. Create the new chart
+    this.categoryChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: chartLabels,
+        datasets: [{
+          label: 'Expenses',
+          data: chartData,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.6)',  // Red
+            'rgba(54, 162, 235, 0.6)',  // Blue
+            'rgba(255, 206, 86, 0.6)', // Yellow
+            'rgba(75, 192, 192, 0.6)',  // Teal
+            'rgba(153, 102, 255, 0.6)', // Purple
+            'rgba(255, 159, 64, 0.6)', // Orange
+            'rgba(40, 167, 69, 0.6)'
+          ],
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              // This ensures legend labels are readable in dark mode
+              color: this.isDarkMode ? '#FFFFFF' : '#000000'
+            }
+          }
+        }
+      }
+    });
   }
 }

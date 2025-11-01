@@ -7,6 +7,7 @@ A modern expense tracking application built with Angular frontend and Spring Boo
 - **💰 Expense Management**: Add, edit, delete, and track expenses
 - **📊 Real-time Statistics**: Total amount, transaction count, and average calculations
 - **📅 Monthly Summary**: Category-wise breakdown of current month expenses
+- **📈 Dynamic Doughnut Chart**: Visualizes the monthly expense breakdown by category
 - **🔍 Filtering & Sorting**: Filter by category and sort by date, amount, or category
 - **🌙 Dark Mode**: Toggle between light and dark themes
 - **📱 Responsive Design**: Works perfectly on desktop, tablet, and mobile
@@ -19,6 +20,7 @@ A modern expense tracking application built with Angular frontend and Spring Boo
 - **Angular 20**: Modern TypeScript framework
 - **Bootstrap 5**: Responsive CSS framework
 - **NgBootstrap**: Angular Bootstrap components
+- **Chart.js**: Data visualization library for the monthly summary
 - **RxJS**: Reactive programming
 
 ### Backend
@@ -213,15 +215,12 @@ curl -X POST http://localhost:8080/api/expenses \
 ## ScreenShots:-
 ### Light Mode:-
 
-![](limg1.png)
--
-![](limg2.png)
+![](limg.png)
 
 ---
 ### Dark Mode:-
-![](dimg1.png)
--
-![](dimg2.png)
+![](dimg.png)
+
 ---
 
 

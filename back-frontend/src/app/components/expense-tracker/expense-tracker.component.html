@@ -33,14 +33,16 @@
       <div class="summary-box" id="monthly-summary">
         <ng-container *ngIf="monthlyCategoryBreakdown.length > 0; else noMonthly">
           <div>Total spent this month: Rs.{{ monthlyTotalAmount.toFixed(2) }}</div>
-          <ul>
-            <li *ngFor="let item of monthlyCategoryBreakdown">{{ item.label }}: Rs.{{ item.amount.toFixed(2) }}</li>
-          </ul>
+          
+          <div class="chart-container">
+              <canvas id="monthlyCategoryChart"></canvas>
+          </div>
+          
         </ng-container>
         <ng-template #noMonthly>
           <div class="no-entries">No expense this month</div>
         </ng-template>
-      </div>
+        </div>
 
       <div class="section-header">Recent expense</div>
 
